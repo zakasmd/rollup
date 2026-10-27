@@ -1039,11 +1039,11 @@ function initLanguage(lang) {
   ["az", "ru", "en"].forEach(l => {
     document.querySelectorAll(`.lang-btn-${l}`).forEach(btn => {
       if (l === lang) {
-        btn.classList.add("bg-[#00e5ff]", "text-[#050811]", "font-extrabold");
-        btn.classList.remove("text-slate-400");
+        btn.classList.add("bg-blue-600", "text-white", "font-extrabold");
+        btn.classList.remove("text-slate-600");
       } else {
-        btn.classList.remove("bg-[#00e5ff]", "text-[#050811]", "font-extrabold");
-        btn.classList.add("text-slate-400");
+        btn.classList.remove("bg-blue-600", "text-white", "font-extrabold");
+        btn.classList.add("text-slate-600");
       }
     });
   });
@@ -1105,40 +1105,40 @@ function renderCatalog() {
     const defaultSize = prod.sizes.find(s => s.default) || prod.sizes[0];
 
     return `
-      <article class="cyber-card flex flex-col justify-between group relative overflow-hidden" data-product-id="${prod.id}">
+      <article class="cyber-card flex flex-col justify-between group relative overflow-hidden bg-white border border-slate-200" data-product-id="${prod.id}">
         <!-- Image Area -->
-        <div class="aspect-[4/3] bg-[#070b16] p-5 flex items-center justify-center overflow-hidden cursor-pointer" onclick="openProductModal('${prod.id}')">
+        <div class="aspect-[4/3] bg-slate-50 p-5 flex items-center justify-center overflow-hidden cursor-pointer" onclick="openProductModal('${prod.id}')">
           <img src="${prod.images[0]}" alt="${data.title}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
         </div>
 
         <!-- Body Info -->
-        <div class="p-5 flex-1 flex flex-col justify-between bg-[#0c1222] border-t border-[#1a253d]">
+        <div class="p-5 flex-1 flex flex-col justify-between bg-white border-t border-slate-100">
           <div>
-            <h3 class="font-bold text-base text-white group-hover:text-[#00e5ff] transition-colors cursor-pointer leading-snug line-clamp-1" onclick="openProductModal('${prod.id}')">
+            <h3 class="font-bold text-base text-slate-900 group-hover:text-blue-600 transition-colors cursor-pointer leading-snug line-clamp-1" onclick="openProductModal('${prod.id}')">
               ${data.title}
             </h3>
-            <p class="mt-2 text-xs text-slate-400 line-clamp-2 leading-relaxed">
+            <p class="mt-2 text-xs text-slate-500 line-clamp-2 leading-relaxed">
               ${data.shortDesc}
             </p>
             
-            <div class="mt-3.5 pt-3 border-t border-[#1a253d] flex items-center justify-between text-[11px] text-slate-400">
-              <span class="flex items-center gap-1 font-semibold text-slate-300">⏱️ ${prod.specs.setup}</span>
-              <span class="flex items-center gap-1 font-semibold text-emerald-400">🛡️ 6 ay</span>
+            <div class="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+              <span class="flex items-center gap-1 font-semibold text-slate-700">⏱️ ${prod.specs.setup}</span>
+              <span class="flex items-center gap-1 font-semibold text-blue-600">🛡️ 6 ay zəmanət</span>
             </div>
           </div>
 
-          <!-- Price & Buttons (100% High Contrast) -->
-          <div class="mt-4 pt-3 border-t border-[#1a253d] flex items-center justify-between gap-2">
+          <!-- Price & Buttons -->
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
             <div>
-              <span class="text-[10px] text-slate-400 block uppercase font-bold tracking-wider">${currentLang === 'az' ? 'Qiymət:' : 'Цена:'}</span>
-              <span class="text-xl font-extrabold text-[#00e5ff] font-heading">${defaultSize.price} AZN</span>
+              <span class="text-[10px] text-slate-400 block uppercase font-bold tracking-wider">${currentLang === 'az' ? 'Qiymət:' : (currentLang === 'ru' ? 'Цена:' : 'Price:')}</span>
+              <span class="text-xl font-extrabold text-blue-600 font-heading">${defaultSize.price} AZN</span>
             </div>
             <div class="flex items-center gap-2">
               <button onclick="openProductModal('${prod.id}')" class="btn-dark px-3 py-2 text-xs">
                 ${translations[currentLang].btn_detail_modal}
               </button>
               <button onclick="orderProductDirectWhatsApp('${prod.id}')" class="btn-wa px-3.5 py-2 text-xs flex items-center gap-1">
-                <span>WA</span>
+                <span>💬</span>
               </button>
             </div>
           </div>
@@ -1226,7 +1226,7 @@ function updateModalContent(prod) {
   const thumbsContainer = document.getElementById("modalThumbs");
   if (thumbsContainer) {
     thumbsContainer.innerHTML = prod.images.map((imgSrc, idx) => `
-      <button onclick="switchModalImage('${imgSrc}', this)" class="thumb-pill ${idx === 0 ? 'active' : ''} w-16 h-16 rounded-xl overflow-hidden border-2 border-[#1e2942] bg-[#070b16] p-1 flex-shrink-0 transition-all">
+      <button onclick="switchModalImage('${imgSrc}', this)" class="thumb-pill ${idx === 0 ? 'active' : ''} w-16 h-16 rounded-xl overflow-hidden border-2 border-slate-200 bg-slate-50 p-1 flex-shrink-0 transition-all">
         <img src="${imgSrc}" class="w-full h-full object-contain" alt="thumb">
       </button>
     `).join("");
@@ -1237,7 +1237,7 @@ function updateModalContent(prod) {
     sizeContainer.innerHTML = prod.sizes.map(s => {
       const isSelected = s.name === currentModalSelectedSize.name;
       return `
-        <button onclick="selectModalSize('${s.name}')" class="px-3.5 py-1.5 rounded-full text-xs font-bold border transition-all ${isSelected ? 'bg-[#00e5ff] text-[#050811] border-[#00e5ff] shadow-md shadow-[#00e5ff]/30' : 'bg-[#10172a] text-slate-300 border-[#1e2942] hover:border-[#00e5ff]'}">
+        <button onclick="selectModalSize('${s.name}')" class="px-3.5 py-1.5 rounded-full text-xs font-bold border transition-all ${isSelected ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-slate-300'}">
           ${s.name} (${s.price} AZN)
         </button>
       `;
@@ -1247,25 +1247,25 @@ function updateModalContent(prod) {
   const specsContainer = document.getElementById("modalSpecs");
   if (specsContainer) {
     specsContainer.innerHTML = `
-      <div class="flex justify-between py-1.5 border-b border-[#1e2942]">
-        <span class="text-slate-400">${langPack.modal_spec_material}:</span>
-        <span class="font-bold text-white text-right">${prod.specs.material}</span>
+      <div class="flex justify-between py-1.5 border-b border-slate-100">
+        <span class="text-slate-500">${langPack.modal_spec_material}:</span>
+        <span class="font-bold text-slate-900 text-right">${prod.specs.material}</span>
       </div>
-      <div class="flex justify-between py-1.5 border-b border-[#1e2942]">
-        <span class="text-slate-400">${langPack.modal_spec_weight}:</span>
-        <span class="font-bold text-white text-right">${prod.specs.weight}</span>
+      <div class="flex justify-between py-1.5 border-b border-slate-100">
+        <span class="text-slate-500">${langPack.modal_spec_weight}:</span>
+        <span class="font-bold text-slate-900 text-right">${prod.specs.weight}</span>
       </div>
-      <div class="flex justify-between py-1.5 border-b border-[#1e2942]">
-        <span class="text-slate-400">${langPack.modal_spec_setup}:</span>
-        <span class="font-bold text-emerald-400 text-right">${prod.specs.setup}</span>
+      <div class="flex justify-between py-1.5 border-b border-slate-100">
+        <span class="text-slate-500">${langPack.modal_spec_setup}:</span>
+        <span class="font-bold text-blue-600 text-right">${prod.specs.setup}</span>
       </div>
-      <div class="flex justify-between py-1.5 border-b border-[#1e2942]">
-        <span class="text-slate-400">${langPack.modal_spec_print}:</span>
-        <span class="font-bold text-white text-right">${prod.specs.print}</span>
+      <div class="flex justify-between py-1.5 border-b border-slate-100">
+        <span class="text-slate-500">${langPack.modal_spec_print}:</span>
+        <span class="font-bold text-slate-900 text-right">${prod.specs.print}</span>
       </div>
       <div class="flex justify-between py-1.5">
-        <span class="text-slate-400">${langPack.modal_spec_warranty}:</span>
-        <span class="font-bold text-[#00e5ff] text-right">${prod.specs.warranty}</span>
+        <span class="text-slate-500">${langPack.modal_spec_warranty}:</span>
+        <span class="font-bold text-blue-600 text-right">${prod.specs.warranty}</span>
       </div>
     `;
   }
